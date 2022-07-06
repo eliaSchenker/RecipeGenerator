@@ -3,10 +3,12 @@ package com.eliaschenker.recipegenerator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     public Button showRecipeBtn;
 
 
+    //Shake Detector
+    public ShakeDetector shakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().hide();
 
         //Create UI references
         showFavoriteBtn = findViewById(R.id.showFavoritesBtn);
@@ -39,7 +43,22 @@ public class MainActivity extends AppCompatActivity {
         //Register OnClick Events
         generateRecipeBtn.setOnClickListener(v -> getRandomRecipe());
 
-        //Register Shake Handler
+        Activity context = this;
+
+        //Register Shake Detector
+        shakeDetector = new ShakeDetector(this, new ShakeEventListener() {
+            @Override
+            public void onShakeStart() {
+                Toast.makeText(context, "Device shaken", Toast.LENGTH_SHORT).show();
+                getRandomRecipe();
+            }
+
+            @Override
+            public void onShakeStop() {
+                //Not implemented
+            }
+        });
+
     }
 
     public void getRandomRecipe() {
