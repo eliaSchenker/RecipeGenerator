@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecipeGenerator</string>
+    <string name="recipe_card_description">Category: %1$s\nArea: %2$s\n%3$d ingredients</string>
+    <string name="recipe_detail_description">Category: %1$s\nArea: %2$s</string>
 </resources>
