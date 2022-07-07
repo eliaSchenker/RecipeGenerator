@@ -36,7 +36,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="75dp"
             android:layout_marginRight="50dp"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 <ImageView
                     android:id="@+id/recipeImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="50dp"
             android:text="Generate a random recipe" />
     </LinearLayout>
