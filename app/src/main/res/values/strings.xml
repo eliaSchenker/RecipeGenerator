@@ -2,4 +2,7 @@
     <string name="app_name">RecipeGenerator</string>
     <string name="recipe_card_description">Category: %1$s\nArea: %2$s\n%3$d ingredients</string>
     <string name="recipe_detail_description">Category: %1$s\nArea: %2$s</string>
+    <string name="favorite_button">FAVORITE</string>
+    <string name="unfavorite_button">UN-FAVORITE</string>
+    <string name="dialog_ok">Okay</string>
 </resources>
