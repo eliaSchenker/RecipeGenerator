@@ -45,15 +45,16 @@ public class RecipeAPIService extends Service {
 
     public void getRandomRecipe(RecipeAPIEventListener recipeAPIEventListener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.myLooper());
 
         executor.execute(() -> {
             try {
                 URL url = new URL(RANDOM_RECIPE_URL);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(5000);
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
 
-                /* Convert the inputStream to a string
+                /*
+                   Convert the inputStream to a string
                    Source: https://mkyong.com/java/how-to-convert-inputstream-to-string-in-java/
                  */
                 ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -69,6 +70,7 @@ public class RecipeAPIService extends Service {
                 ArrayList<Ingredient> ingredients = new ArrayList<>();
 
                 JSONObject recipeTop = (JSONObject) json.getJSONArray("meals").get(0);
+                recipe.setId(recipeTop.getString("idMeal"));
                 recipe.setName(recipeTop.getString("strMeal"));
                 recipe.setCategory(recipeTop.getString("strCategory"));
                 recipe.setArea(recipeTop.getString("strArea"));
@@ -94,6 +96,7 @@ public class RecipeAPIService extends Service {
                 recipeAPIEventListener.onFinish(recipe);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
+                recipeAPIEventListener.onFail();
             }
         });
     }
