@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Objects;
 
 public class Recipe implements Serializable {
+    private String id;
     private String name;
     private String category;
     private String area;
@@ -18,13 +19,22 @@ public class Recipe implements Serializable {
 
     }
 
-    public Recipe(String name, String category, String area, String instructions, Ingredient[] ingredients, URL thumbnailURL, URL sourceURL) {
+    public Recipe(String id, String name, String category, String area, String instructions, Ingredient[] ingredients, URL thumbnailURL, URL sourceURL) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.area = area;
         this.ingredients = ingredients;
         this.thumbnailURL = thumbnailURL;
         this.sourceURL = sourceURL;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getInstructions() {
