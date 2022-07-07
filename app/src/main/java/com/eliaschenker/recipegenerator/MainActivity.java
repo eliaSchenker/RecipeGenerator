@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void fetchAndSetRandomRecipe() {
         if(recipeAPIServiceConnected) {
+            Activity context = this;
             this.recipeAPIService.getRandomRecipe(new RecipeAPIEventListener() {
                 @Override
                 public void onFinish(Recipe recipe) {
@@ -133,7 +136,14 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFail() {
-                    //Not implement
+                    runOnUiThread(() -> {
+                        new AlertDialog.Builder(context)
+                                .setTitle("No connection")
+                                .setMessage("Generation of random recipe failed, not connected!")
+                                .setNeutralButton(R.string.dialog_ok, (dialogInterface, i) -> {
+                                })
+                                .show();
+                    });
                 }
             });
         }
