@@ -24,6 +24,7 @@ public class Recipe implements Serializable {
         this.name = name;
         this.category = category;
         this.area = area;
+        this.instructions = instructions;
         this.ingredients = ingredients;
         this.thumbnailURL = thumbnailURL;
         this.sourceURL = sourceURL;
