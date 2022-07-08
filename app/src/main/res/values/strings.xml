@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">RecipeGenerator</string>
     <string name="recipe_card_description">Category: %1$s\nArea: %2$s\n%3$d ingredients</string>
-    <string name="recipe_detail_description">Category: %1$s\nArea: %2$s</string>
+    <!-- RecipeDetailActivity -->
+    <string name="recipe_detail_description">Category: %1$s\nArea: %2$s</string>s
     <string name="favorite_button">FAVORITE</string>
-    <string name="unfavorite_button">UN-FAVORITE</string>
+    <string name="unfavorite_button">UNFAVORITE</string>
+    <string name="back">BACK</string>
+    <string name="share_btn">SHARE THIS RECIPE</string>
+    <string name="open_source_btn">OPEN RECIPE SOURCE</string>
+    <string name="share_text">$s%1\n%s%2\n%s%3\nThis recipe was generated using the Recipe Generator, download it now!</string>
     <string name="dialog_ok">Okay</string>
+    <string name="appwidget_text">Generate recipe</string>
+    <string name="add_widget">Generate recipe</string>
+    <string name="app_widget_description">Click the widget to generate a random recipe</string>
 </resources>
