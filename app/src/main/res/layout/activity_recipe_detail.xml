@@ -23,24 +23,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="0dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/backBtn"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="100dp"
                 android:layout_weight="1"
-                android:text="Back" />
+                android:drawableLeft="@drawable/ic_round_chevron_left_24"
+                android:text="@string/back" />
 
             <Button
                 android:id="@+id/favoriteBtn"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="0dp"
                 android:layout_weight="1"
-                android:text="Favorite" />
+                android:drawableRight="@drawable/ic_round_star_24_white"
+                android:text="@string/favorite_button" />
         </LinearLayout>
 
         <ScrollView
@@ -56,6 +58,7 @@
                     android:id="@+id/recipeDetailImage"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="30dp"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -102,8 +105,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="100dp"
+                    android:layout_marginBottom="20dp"
                     android:textColor="#000000" />
+
+                <Button
+                    android:id="@+id/shareRecipeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:text="@string/share_btn" />
+
+                <Button
+                    android:id="@+id/openRecipeSourceBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginBottom="100dp"
+                    android:text="@string/open_source_btn" />
             </LinearLayout>
         </ScrollView>
 
