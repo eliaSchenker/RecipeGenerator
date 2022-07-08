@@ -7,6 +7,12 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ * Source: https://stackoverflow.com/questions/14332296/how-to-set-image-from-url-using-asynctask
+ * The SetImageToURLTask takes an ImageView, downloads an Image by a url and sets the imageview to it.
+ */
 public class SetImageToURLTask extends AsyncTask<String, Void, Bitmap> {
     private final ImageView bmImage;
 
