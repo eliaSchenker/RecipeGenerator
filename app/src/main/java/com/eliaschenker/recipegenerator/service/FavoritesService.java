@@ -1,30 +1,25 @@
 package com.eliaschenker.recipegenerator.service;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 
-import androidx.annotation.RequiresApi;
 
 import com.eliaschenker.recipegenerator.model.Recipe;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Objects;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ * The FavoritesService manages a list of favorite recipes which can be added, removed and are
+ * saved in the SharedPreferences.
+ */
 public class FavoritesService extends Service {
     private final IBinder binder = new FavoritesBinder();
 
@@ -79,23 +74,34 @@ public class FavoritesService extends Service {
     /**
      * Adds a new favorite
      * @param recipe The new favorite recipe
+     * @param doSave Should the favorites be saved to the sharedpreferences
      */
-    public void addFavorite(Recipe recipe) {
+    public void addFavorite(Recipe recipe, boolean doSave) {
         favorites.add(recipe);
-        saveFavorites();
+        if(doSave) {
+            saveFavorites();
+        }
     }
 
     /**
      * Removes a favorite
      * @param id The id of a recipe to be removed
+     * @param doSave Should the favorites be saved to the sharedpreferences
      */
-    public void removeFavorite(String id) {
+    public void removeFavorite(String id, boolean doSave) {
+        Recipe recipeToRemove = null;
         for(Recipe recipe: favorites) {
             if(recipe.getId().equals(id)) {
-                favorites.remove(recipe);
+                recipeToRemove = recipe;
+                break;
             }
         }
-        saveFavorites();
+        if(recipeToRemove != null) {
+            favorites.remove(recipeToRemove);
+        }
+        if(doSave) {
+            saveFavorites();
+        }
     }
 
     /**
