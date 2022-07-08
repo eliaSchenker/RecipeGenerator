@@ -16,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,6 +33,11 @@ import com.eliaschenker.recipegenerator.util.ShakeEventListener;
 
 import java.io.InputStream;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     //UI References
@@ -44,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public TextView recipeText;
     public Button showRecipeBtn;
 
-
     //Shake Detector
     public ShakeDetector shakeDetector;
 
@@ -57,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         //Create UI references
         showFavoriteBtn = findViewById(R.id.showFavoritesBtn);
         generateRecipeBtn = findViewById(R.id.generateRecipeBtn);
@@ -68,7 +76,17 @@ public class MainActivity extends AppCompatActivity {
         recipeImage = findViewById(R.id.recipeImage);
 
         //Register OnClick Events
-        generateRecipeBtn.setOnClickListener(v -> fetchAndSetRandomRecipe());
+        generateRecipeBtn.setOnClickListener(v -> {
+            //Play button animation
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_anim);
+            generateRecipeBtn.startAnimation(animation);
+
+            fetchAndSetRandomRecipe();
+        });
+        showFavoriteBtn.setOnClickListener(view -> {
+            Intent favoriteIntent = new Intent(this, FavoritesActivity.class);
+            startActivity(favoriteIntent);
+        });
 
         //Register Shake Detector
         shakeDetector = new ShakeDetector(this, new ShakeEventListener() {
@@ -82,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 //Not implemented
             }
         });
-
     }
 
     @Override
@@ -159,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
             //References to the BMI Service
             recipeAPIService = binder.getService();
             recipeAPIServiceConnected = true;
+
+            fetchAndSetRandomRecipe();
         }
 
         @Override
