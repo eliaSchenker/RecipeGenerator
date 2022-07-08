@@ -2,12 +2,16 @@ package com.eliaschenker.recipegenerator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +23,8 @@ import com.eliaschenker.recipegenerator.service.FavoritesService;
 import com.eliaschenker.recipegenerator.service.RecipeAPIService;
 import com.eliaschenker.recipegenerator.service.SetImageToURLTask;
 
+import java.net.URL;
+
 public class RecipeDetailActivity extends AppCompatActivity {
 
     public Recipe recipe;
@@ -26,6 +32,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     //UI References
     public Button backButton;
     public Button favoriteButton;
+    public Button shareButton;
+    public Button openRecipeSourceButton;
     public TextView recipeTitle;
     public TextView recipeDescription;
     public TextView recipeIngredients;
@@ -43,11 +51,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         Intent intent = getIntent();
-        recipe = (Recipe) intent.getExtras().get("recipe");
+        recipe = (Recipe) intent.getExtras().get("recipe"); //Get the recipe stored in the intent
 
         //Assign UI References
         backButton = findViewById(R.id.backBtn);
         favoriteButton = findViewById(R.id.favoriteBtn);
+        shareButton = findViewById(R.id.shareRecipeBtn);
+        openRecipeSourceButton = findViewById(R.id.openRecipeSourceBtn);
         recipeTitle = findViewById(R.id.recipeDetailTitle);
         recipeDescription = findViewById(R.id.recipeDescription);
         recipeIngredients = findViewById(R.id.ingredientsList);
@@ -63,9 +73,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
      */
     public void initUI() {
         recipeTitle.setText(recipe.getName());
-        recipeDescription.setText(getString(R.string.recipe_detail_description,
+        String recipeDesc = getString(R.string.recipe_detail_description,
                 recipe.getCategory(),
-                recipe.getArea()));
+                recipe.getArea());
+        recipeDescription.setText(recipeDesc);
+
+        //Build the ingredients text
         StringBuilder ingredientsText = new StringBuilder();
         for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientsText.append("\t\t•");
@@ -83,24 +96,69 @@ public class RecipeDetailActivity extends AppCompatActivity {
             onBackPressed();
             finish();
         });
+
+        shareButton.setOnClickListener(view -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+
+            //Generate the text for the message
+            String shareText =
+                    recipe.getName() + "\n" +
+                            recipeDesc + "\n\nIngredients:\n" +
+                            ingredientsText + "\n" +
+                            recipe.getInstructions() +
+                            "\n\nThis recipe was generated using the Recipe Generator, download now!";
+
+            //Open the share screen
+            sendIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+            //Vibrate the device when sharing
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+            v.vibrate(400);
+        });
+
+        openRecipeSourceButton.setOnClickListener(view -> {
+            URL sourceURL = recipe.getSourceURL();
+            //Check if the source URL exists
+            if(sourceURL != null && !sourceURL.toString().equals("")) {
+                //If it exists, open it in the browser
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sourceURL.toString()));
+                startActivity(intent);
+            }else {
+                //Show error message if it doesnt exist.
+                new AlertDialog.Builder(this).setTitle("No source link").
+                        setMessage("Sorry, this recipe does not have a source link!")
+                        .setNeutralButton(R.string.dialog_ok, (dialogInterface, i) -> {});
+            }
+
+        });
     }
 
+    /**
+     * Updates the text and event of the favorite button (according to if the recipe is already favorited)
+     */
     public void updateFavoriteButton() {
         if(!favoritesService.isFavorite(recipe.getId())) {
             favoriteButton.setText(getString(R.string.favorite_button));
             favoriteButton.setOnClickListener(view -> {
-                favoritesService.addFavorite(recipe);
+                favoritesService.addFavorite(recipe, true);
                 updateFavoriteButton();
             });
         }else {
             favoriteButton.setText(getString(R.string.unfavorite_button));
             favoriteButton.setOnClickListener(view -> {
-                favoritesService.removeFavorite(recipe.getId());
+                favoritesService.removeFavorite(recipe.getId(), true);
                 updateFavoriteButton();
             });
         }
     }
 
+    /**
+     * Initialize and bind the favorites service
+     */
     public void initFavoritesService() {
         Intent bindFavoritesServiceIntent = new Intent(this, FavoritesService.class);
         bindService(bindFavoritesServiceIntent, favoritesServiceConnection, Context.BIND_AUTO_CREATE);
