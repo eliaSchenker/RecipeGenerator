@@ -5,6 +5,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ * Class which represents a recipe given by the API
+ */
 public class Recipe implements Serializable {
     private String id;
     private String name;

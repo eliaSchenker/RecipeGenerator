@@ -1,12 +1,9 @@
 package com.eliaschenker.recipegenerator;
 
-import android.content.Context;
 
 import com.eliaschenker.recipegenerator.model.Ingredient;
 import com.eliaschenker.recipegenerator.model.Recipe;
 import com.eliaschenker.recipegenerator.service.FavoritesService;
-import com.eliaschenker.recipegenerator.service.RecipeAPIEventListener;
-import com.eliaschenker.recipegenerator.service.RecipeAPIService;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,8 +12,12 @@ import org.junit.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ * Unittests for the Favorites Service
+ */
 public class FavoritesServiceUnitTest {
     public FavoritesService favoritesService;
 

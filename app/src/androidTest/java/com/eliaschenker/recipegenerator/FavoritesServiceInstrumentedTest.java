@@ -18,6 +18,8 @@ import com.eliaschenker.recipegenerator.service.FavoritesService;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * @author Elia Schenker
+ *
  * Instrumented test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>

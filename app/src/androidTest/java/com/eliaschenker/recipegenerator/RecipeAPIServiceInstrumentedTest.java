@@ -22,6 +22,8 @@ import com.eliaschenker.recipegenerator.service.RecipeAPIService;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * @author Elia Schenker
+ * 08.07.2022
  * Instrumented test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>

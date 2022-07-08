@@ -1,6 +1,7 @@
 package com.eliaschenker.recipegenerator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -25,8 +26,15 @@ import com.eliaschenker.recipegenerator.service.SetImageToURLTask;
 
 import java.net.URL;
 
+/**
+ * @author Elia Schenker
+ * 08.07.2022
+ * RecipeDetailActivity displays a single recipe's information, ingredients and instructions.
+ * It also allows the user to share the recpie and view it's source.
+ */
 public class RecipeDetailActivity extends AppCompatActivity {
 
+    //The Recipe of which the details are displayed
     public Recipe recipe;
 
     //UI References
@@ -46,6 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_recipe_detail);
 
         getSupportActionBar().hide();

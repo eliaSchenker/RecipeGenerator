@@ -1,6 +1,7 @@
 package com.eliaschenker.recipegenerator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
@@ -36,7 +37,7 @@ import java.io.InputStream;
 /**
  * @author Elia Schenker
  * 08.07.2022
- *
+ * Main Activity which generates random recipes and displays them
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();

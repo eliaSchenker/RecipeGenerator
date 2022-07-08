@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 /**
- * Implementation of App Widget functionality.
+ * @author Elia Schenker
+ * 08.07.2022
+ * Implementation of App Widget functionality. The app widget enables the user to open the app and
+ * generate a random recipe
  */
 public class RecipeGeneratorWidget extends AppWidgetProvider {
 
@@ -19,13 +22,13 @@ public class RecipeGeneratorWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        // Perform this loop procedure for each widget that belongs to this
-        // provider.
+        /* Perform this loop procedure for each widget that belongs to this
+           Source: https://developer.android.com/guide/topics/appwidgets
+           provider. */
         for (int i=0; i < appWidgetIds.length; i++) {
             int appWidgetId = appWidgetIds[i];
             // Create an Intent to launch ExampleActivity
             Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra("generateRandom", true);
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     /* context = */ context,
                     /* requestCode = */ 0,
